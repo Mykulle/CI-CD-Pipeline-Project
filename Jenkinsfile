@@ -12,11 +12,10 @@ pipeline{
                 cleanWs()
             }
         }
-    }
-    stages{
+        
         stage("Checkout from SCM"){
             steps{
-                git branch: 'main', credentialsID: 'github', url: 'https://github.com/Mykulle/CI-CD-Pipepline-Project'
+                git branch: 'main', credentialsId: 'github', url: 'https://github.com/Mykulle/CI-CD-Pipepline-Project'
             }
         }
     }
