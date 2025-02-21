@@ -8,14 +8,26 @@ pipeline{
     }
     stages{
         stage("Cleanup Workspace"){
-            steps{
+            steps {
                 cleanWs()
             }
         }
-        
+
         stage("Checkout from SCM"){
-            steps{
+            steps {
                 git branch: 'main', credentialsId: 'github', url: 'https://github.com/Mykulle/CI-CD-Pipepline-Project'
+            }
+        }
+
+        stage("Build application"){
+            steps {
+                sh "mvn clean package"
+            }
+        }
+
+        stage("Test Application"){
+            steps {
+                sh "mvn test"
             }
         }
     }
