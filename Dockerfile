@@ -1,8 +1,9 @@
 # Build Stage
-FROM maven:3.9.0-eclipse-temurin-21 AS build
+FROM eclipse-temurin:21-jdk AS build
 WORKDIR /app
 COPY . .
-RUN mvn clean install
+RUN apt-get update && apt-get install -y maven \
+    && mvn clean install
 
 # Runtime Stage
 FROM eclipse-temurin:21-jdk
