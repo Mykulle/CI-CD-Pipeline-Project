@@ -7,7 +7,7 @@ pipeline{
         maven 'Maven3'
     }
     environment{
-        APP_NAME = "CI-CD-Pipepline-Project"
+        APP_NAME = "CI-CD-Pipeline-Project"
         RELEASE = "1.0.0"
         DOCKER_USER = "mykulle"
         DOCKER_PASSWD = 'dockerhub'
@@ -23,7 +23,7 @@ pipeline{
 
         stage("Checkout from SCM"){
             steps {
-                git branch: 'main', credentialsId: 'github', url: 'https://github.com/Mykulle/CI-CD-Pipepline-Project'
+                git branch: 'main', credentialsId: 'github', url: 'https://github.com/Mykulle/CI-CD-Pipeline-Project'
             }
         }
 
