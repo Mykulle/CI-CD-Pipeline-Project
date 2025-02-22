@@ -7,7 +7,7 @@ pipeline{
         maven 'Maven3'
     }
     environment{
-        APP_NAME = "CI-CD-Pipeline-Project"
+        APP_NAME = "ci-cd-pipeline-project"
         RELEASE = "1.0.0"
         DOCKER_USER = "mykulle"
         DOCKER_PASSWD = 'dockerhub'
