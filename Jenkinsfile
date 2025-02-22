@@ -24,7 +24,7 @@ pipeline{
 
         stage("Checkout from SCM"){
             steps {
-                git branch: 'main', credentialsId: 'github-pat', url: 'https://github.com/Mykulle/GitOps-CI-CD-Pipeline'
+                git branch: 'main', credentialsId: 'github', url: 'https://github.com/Mykulle/CI-CD-Pipeline-Project'
             }
         }
 
