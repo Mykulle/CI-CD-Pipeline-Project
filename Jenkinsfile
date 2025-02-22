@@ -13,6 +13,8 @@ pipeline{
         DOCKER_PASSWD = 'dockerhub'
         IMAGE_NAME = "${DOCKER_USER}" + "/" + "${APP_NAME}"
         IMAGE_TAG = "${RELEASE}-${BUILD_NUMBER}"
+        APP_NAME = "ci-cd-pipeline-project"
+        JENKINS_API_TOKEN = "${JENKINS_API_TOKEN}"
     }
     stages{
         stage("Cleanup Workspace"){
@@ -23,7 +25,7 @@ pipeline{
 
         stage("Checkout from SCM"){
             steps {
-                git branch: 'main', credentialsId: 'github', url: 'https://github.com/Mykulle/CI-CD-Pipeline-Project'
+                git branch: 'main', credentialsId: 'github-pat', url: 'https://github.com/Mykulle/GitOps-CI-CD-Pipeline'
             }
         }
 
@@ -67,6 +69,14 @@ pipeline{
                         docker_image.push('latest')
                     }
 
+                }
+            }
+        }
+
+        stage("Trigger CICD Pipeline"){
+            steps {
+                script {
+                    sh "curl -v -k --user admin:${JENKINS_API_TOKEN} -X POST -H 'cache-control: no-cache' -H 'content-type: application/x-www-form-urlencoded' --data 'IMAGE_TAG=${IMAGE_TAG}' 'https://jenkinsdevdman.click/job/gitops-ci-cd-pipeline/buildWithParameters?token=gitops-token'" 
                 }
             }
         }
