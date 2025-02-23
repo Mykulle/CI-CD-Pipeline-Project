@@ -15,16 +15,16 @@ pipeline{
 
         stage("Checkout from SCM"){
             steps {
-                git branch: 'main', credentialsId: 'github', url: 'https://github.com/Mykulle/GitOps-CI-CD-Pipeline'
+                git branch: 'main', credentialsId: 'github', url: 'https://github.com/Mykulle/CI-CD-Pipeline-Project'
             }
         }   
 
         stage("Update the Deployment Tags"){
             steps{
                 sh"""
-                    cat deployment.yaml
-                    sed -i 's/${APP_NAME}.*/${APP_NAME}:${IMAGE_TAG}/g' deployment.yaml
-                    cat deployment.yaml
+                    cat gitops/deployment.yaml
+                    sed -i 's/${APP_NAME}.*/${APP_NAME}:${IMAGE_TAG}/g' gitops/deployment.yaml
+                    cat gitops/deployment.yaml
                 """
             }
         }
@@ -34,12 +34,12 @@ pipeline{
                 sh """
                     git config --global user.name "mykulle"
                     git config --global user.email "ducmanh3006@gmail.com"
-                    git add deployment.yaml
+                    git add gitops/deployment.yaml
                     git commit -m "Update Deployment Manifest"
                 """
 
                 withCredentials([gitUsernamePassword(credentialsId: 'github', gitToolName: 'Default')]) {
-                    sh "git push https://github.com/Mykulle/GitOps-CI-CD-Pipeline main"
+                    sh "git push https://github.com/Mykulle/CI-CD-Pipeline-Project main"
                 }
             }
         }
